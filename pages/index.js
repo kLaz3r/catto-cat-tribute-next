@@ -80,6 +80,16 @@ const Content = styled.main`
   }
 `;
 
+const Footer = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  color: ${(props) => props.theme.light};
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+`;
+
 export default function Home({ catFact, catPic }) {
   return (
     <div>
@@ -139,6 +149,9 @@ export default function Home({ catFact, catPic }) {
             ></Image>
           </div>
         </Content>
+        <Footer>
+          <p>Come back after five minutes for more cat facts!</p>
+        </Footer>
       </ThemeProvider>
     </div>
   );
@@ -149,6 +162,13 @@ export async function getStaticProps() {
     const data = await axios
       .get('https://cat-fact.herokuapp.com/facts/random?amount=10')
       .then((res) => res.data);
+    // if (data.status.verified === true) {
+    //   console.log(data);
+    //   return data.text;
+    // } else {
+    //   return getCatFacts();
+    // }
+
     const filteredData = data.filter((item) => {
       if (item.status.verified === true) {
         return true;
@@ -159,6 +179,7 @@ export async function getStaticProps() {
     if (filteredData.length === 0) {
       return getCatFacts();
     } else {
+      console.log(filteredData[0].text);
       return filteredData[0].text;
     }
   }
