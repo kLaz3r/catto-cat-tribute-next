@@ -160,7 +160,7 @@ export default function Home({ catFact, catPic }) {
 export async function getStaticProps() {
   async function getCatFacts() {
     const data = await axios
-      .get('https://cat-fact.herokuapp.com/facts/random?amount=10')
+      .get('https://meowfacts.herokuapp.com/')
       .then((res) => res.data);
     // if (data.status.verified === true) {
     //   console.log(data);
@@ -169,19 +169,21 @@ export async function getStaticProps() {
     //   return getCatFacts();
     // }
 
-    const filteredData = data.filter((item) => {
-      if (item.status.verified === true) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-    if (filteredData.length === 0) {
-      return getCatFacts();
-    } else {
-      console.log(filteredData[0].text);
-      return filteredData[0].text;
-    }
+    // const filteredData = data.filter((item) => {
+    //   if (item.status.verified === true) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // });
+    // if (filteredData.length === 0) {
+    //   return getCatFacts();
+    // } else {
+    //   console.log(filteredData[0].text);
+    //   return filteredData[0].text;
+    // }
+    console.log(data.data[0]);
+    return data.data[0];
   }
   async function getCatPic() {
     const data = await axios(
